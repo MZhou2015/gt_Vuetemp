@@ -2,7 +2,6 @@
   <div id="app">
     <img src="./assets/store_logo.png">
     <navBar/>
-    {{pjdata}}
     <proCatagory />
     <!-- <router-view/>  -->
   </div>

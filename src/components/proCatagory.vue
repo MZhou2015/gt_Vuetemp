@@ -1,18 +1,17 @@
 <template>
-    <div class="category">
-        Home >> Products >> Microphone
-       <ul>
-         <li><a href="/">Home</a></li>
-         <li><a href="#">Products</a>
-            <ul>
-                <li><a href="products/204">Amplifier/Mixer</a></li>
-                <li><a href="products/206">Karaoke Player</a></li>
-                <li><a href="products/206">Microphone</a></li>
-            </ul>
-          </li>
-          <li><a href="/about">About</a></li>
-       </ul>
-       {{mddata}}
+  <div class="category">
+    <div>Home >> Products >> Microphone</div>
+    <div class="listview">
+      <div class="imgx" v-for="(mx,idx) in viewlist" :key=idx >
+        <img :src=img_url+mx.image >
+        <p><a :href=link_url+mx.ptcode>{{mx.brief}}</a></p>
+        <p>{{mx.model}}</p>
+        <div>{{mddata}}</div>
+      </div>
+      <div class="imgx"></div>
+      <div class="imgx"></div>
+      <div class="imgx"></div>
+    </div> <!--    End of listView-->
   </div>
 </template>
 
@@ -25,24 +24,37 @@ export default {
   data () {
     return {
       msg: 'Welcome to Navigation Bar',
-      rooturl:'http',
+      rooturl: 'http',
       catid: 204,
-      mddata: 'Yes'
+      img_url: 'https://mzhou2015.github.io/gecon_pub/src/vxdagi/image/',
+      link_url: './prodetail/',
+      mddata: 'Yes',
+      viewlist: [
+        {brief: 'XiBon Power Amplifier', image: 'HK900-220619f9c.jpg', model: 'BK-300MK', ptcode: 'E30215'},
+        {brief: 'InAndon Karaoke Player ,4T HDD with 98K songs, huge cloud songs download. Newest model (KV-V5 Max)', image: 'HK900-220619f9c.jpg', model: 'KV-815X5-4TB', ptcode: 'E30515'},
+        {brief: 'XiBonKK Power Amplifier', image: 'HK900-220619f9c.jpg', model: 'BK-x300MK', ptcode: 'E30415'},
+        5654, 698, 6542, 23, 98]
     }
   },
   created () {
     this.rootcheck('check')
     this.getProdata(this.catid)
   },
+  computed: {
+    catltem: function () {
+      var sd = this.mddata
+      return sd
+    }
+  },
   methods: {
     rootcheck (context, rt) {
       var urlstring = window.location.href
       var url3 = new URL(urlstring)
-      this.rooturl = 'https://' + url3
-      if(url3 == 'localhost:5000') this.rooturl = 'http://'+ url3
-      this.rooturl = url3
+      this.rooturl = 'https://' + url3.host
+      if (url3.host === 'localhost:5000') this.rooturl = 'http://' + url3.host
       console.log(url3.host)
       console.log(urlstring)
+      console.log(this.rooturl)
       // var root = './php/'
       // if (url3.host === 'localhost:3000') root = 'http://localhost/phptutorial/vsMain21/php/'
     },
@@ -56,6 +68,11 @@ export default {
           this.mddata = mdata
         })
         .then(() => console.log(this.mddata))
+        .catch((err) => {
+          console.log(err)
+          this.mddata = this.viewlist
+          console.log(this.mddata)
+        })
 
       // const path = context.getters.mypath
       // const mroot = context.getters.getroot
@@ -72,5 +89,38 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+div.category{
+  background-color: #f6f6e5;
+}
+.listview{
+  display: flex;
+  width: 100%;
+  justify-content:start;
+  flex-wrap: wrap;
+}
+.imgx{
+  width:420px;
+  min-width: 360px;
+  max-width: 650;
+  flex-grow: 1;
+  padding: 5px;
+  margin: 5px;
+  background-color: #f2f2f2;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+  }
+  .imgx p{
+    width: 100%;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #f2f2f2;
+  }
+  .imgx p a{
+    color:#35459a;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  img{
+    width: 100%;
+  }
 </style>
