@@ -50,14 +50,17 @@ export default {
       console.log(url3.host)
       console.log(urlstring)
       console.log(this.rooturl)
-      let name = url3.searchParams.get('pcode')
-      console.log(name)
+      let pcode = url3.searchParams.get('pcode')
+      let subfold = url3.searchParams.get('subfold')
+      if (pcode) this.catid = pcode
+      console.log(pcode, subfold)
       // var root = './php/'
       // if (url3.host === 'localhost:3000') root = 'http://localhost/phptutorial/vsMain21/php/'
     },
-    async getProdata (react) {
+    async getProdata (mcat) {
       // const headers = { 'Content-Type': 'application/json' }
-      const furl = this.rooturl + '/gsapi/data'
+      const furl = this.rooturl + '/gsapi/data/?subfold=category&pcode=' + mcat
+      console.log(furl)
       const result = await axios.get(furl)
       this.viewlist = result.data
       console.log(result.data)

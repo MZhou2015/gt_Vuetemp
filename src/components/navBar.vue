@@ -2,11 +2,11 @@
    <div class="nav">
       <ul>
          <li><a href="/">Home</a></li>
-         <li><a href="#">Products</a>
+         <li><a href="/">Products</a>
             <ul>
-               <li><a href="products/204">Amplifier/Mixer</a></li>
-               <li><a href="products/206">Karaoke Player</a></li>
-               <li><a href="products/206">Microphone</a></li>
+               <li><a href="/?subfold=category&pcode=204">Amplifier/Mixer</a></li>
+               <li><a href="/?subfold=category&pcode=206">Karaoke Player</a></li>
+               <li><a href="/?subfold=category&pcode=208">Microphone</a></li>
             </ul>
          </li>
          <li><a href="/about">About</a></li>
