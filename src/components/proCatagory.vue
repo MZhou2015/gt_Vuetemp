@@ -6,8 +6,7 @@
         <img :src=img_url+mx.image >
         <p><a :href=link_url+mx.ptcode>{{mx.brief}}</a></p>
         <p>{{mx.model}}</p>
-        <div>{{mddata}}</div>
-      </div>
+       </div>
       <div class="imgx"></div>
       <div class="imgx"></div>
       <div class="imgx"></div>
@@ -16,7 +15,6 @@
 </template>
 
 <script>
-
 import axios from 'axios'
 
 export default {
@@ -27,13 +25,9 @@ export default {
       rooturl: 'http',
       catid: 204,
       img_url: 'https://mzhou2015.github.io/gecon_pub/src/vxdagi/image/',
-      link_url: './prodetail/',
+      link_url: '/?subfold=prodetail&pcode=',
       mddata: 'Yes',
-      viewlist: [
-        {brief: 'XiBon Power Amplifier', image: 'HK900-220619f9c.jpg', model: 'BK-300MK', ptcode: 'E30215'},
-        {brief: 'InAndon Karaoke Player ,4T HDD with 98K songs, huge cloud songs download. Newest model (KV-V5 Max)', image: 'HK900-220619f9c.jpg', model: 'KV-815X5-4TB', ptcode: 'E30515'},
-        {brief: 'XiBonKK Power Amplifier', image: 'HK900-220619f9c.jpg', model: 'BK-x300MK', ptcode: 'E30415'},
-        5654, 698, 6542, 23, 98]
+      viewlist: [{brief: 'XiBon Power Amplifier', image: 'HK900-220619f9c.jpg', model: 'BK-300MK', ptcode: 'E30215'}]
     }
   },
   created () {
@@ -50,38 +44,23 @@ export default {
     rootcheck (context, rt) {
       var urlstring = window.location.href
       var url3 = new URL(urlstring)
-      this.rooturl = 'https://' + url3.host
-      if (url3.host === 'localhost:5000') this.rooturl = 'http://' + url3.host
+      console.log('url3', url3)
+      this.rooturl = url3.origin
+      if (url3.host === 'localhost:3037') this.rooturl = 'http://localhost:5000'
       console.log(url3.host)
       console.log(urlstring)
       console.log(this.rooturl)
+      let name = url3.searchParams.get('pcode')
+      console.log(name)
       // var root = './php/'
       // if (url3.host === 'localhost:3000') root = 'http://localhost/phptutorial/vsMain21/php/'
     },
     async getProdata (react) {
       // const headers = { 'Content-Type': 'application/json' }
       const furl = this.rooturl + '/gsapi/data'
-      await axios.get(furl, {'Content-Type': 'application/json'})
-        .then(response => response.data)
-        .then(mdata => {
-          console.log(mdata)
-          this.mddata = mdata
-        })
-        .then(() => console.log(this.mddata))
-        .catch((err) => {
-          console.log(err)
-          this.mddata = this.viewlist
-          console.log(this.mddata)
-        })
-
-      // const path = context.getters.mypath
-      // const mroot = context.getters.getroot
-      // var url = mroot + path + react
-      //  const restt = await axios.get(url)
-      // const alllist = { mostact: restt.data.mostact,
-      // listcate: restt.data.cate
-      // }
-      // console.log(restt.data)
+      const result = await axios.get(furl)
+      this.viewlist = result.data
+      console.log(result.data)
     }
   }
 }

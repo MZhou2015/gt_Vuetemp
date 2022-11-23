@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/store_logo.png">
     <navBar/>
-    <proCatagory />
+    <Home ></Home>
     <!-- <router-view/>  -->
   </div>
 </template>
@@ -10,22 +10,20 @@
 <script>
 
 import navBar from './components/navBar'
-import proCatagory from './components/proCatagory'
+import Home from './components/home'
 
 export default {
   name: 'App',
+  components: {
+    navBar,
+    Home
+  },
   data () {
     return {
       pjdata: 'Products Json',
       catid: 204
     }
-  },
-  components: {
-    navBar,
-    proCatagory
-
   }
-
 }
 </script>
 
