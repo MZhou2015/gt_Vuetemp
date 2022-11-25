@@ -1,16 +1,17 @@
 <template>
   <div class="category">
-    <div>Home >> Products >> Microphone</div>
-    <div class="listview">
-      <div class="imgx" v-for="(mx,idx) in viewlist" :key=idx >
-        <img :src=img_url+mx.image >
-        <p><a :href=link_url+mx.ptcode>{{mx.brief}}</a></p>
-        <p>{{mx.model}}</p>
-       </div>
-      <div class="imgx"></div>
-      <div class="imgx"></div>
-      <div class="imgx"></div>
-    </div> <!--    End of listView-->
+    <div>Home >> Products >> Feature Products</div>
+    <div class="container-fliud bg-light">
+      <div class="row">
+        <div class=" boxf col-12 col-lg-3 col-md-6 col-sm-12" v-for="(mx,idx) in viewlist" :key=idx >
+          <div class="boxm" >
+            <img :src=img_url+mx.image >
+            <p><a :href=link_url+mx.ptcode>{{mx.brief}}</a></p>
+            <p>{{mx.model}}</p>
+          </div>
+        </div>
+      </div>
+    </div><!--    End of container-fliud -->
   </div>
 </template>
 
@@ -23,7 +24,7 @@ export default {
     return {
       msg: 'Welcome to Navigation Bar',
       rooturl: 'http',
-      catid: 204,
+      query: {sf: 'category', code: 204},
       img_url: 'https://mzhou2015.github.io/gecon_pub/src/vxdagi/image/',
       link_url: '/?subfold=prodetail&pcode=',
       mddata: 'Yes',
@@ -32,7 +33,8 @@ export default {
   },
   created () {
     this.rootcheck('check')
-    this.getProdata(this.catid)
+    this.getProdata(this.query)
+    console.log(this.query)
   },
   computed: {
     catltem: function () {
@@ -52,14 +54,15 @@ export default {
       console.log(this.rooturl)
       let pcode = url3.searchParams.get('pcode')
       let subfold = url3.searchParams.get('subfold')
-      if (pcode) this.catid = pcode
+      if (pcode) this.query = {sf: subfold, code: pcode}
       console.log(pcode, subfold)
       // var root = './php/'
       // if (url3.host === 'localhost:3000') root = 'http://localhost/phptutorial/vsMain21/php/'
     },
     async getProdata (mcat) {
       // const headers = { 'Content-Type': 'application/json' }
-      const furl = this.rooturl + '/gsapi/data/?subfold=category&pcode=' + mcat
+      console.log(mcat)
+      const furl = this.rooturl + '/gsapi/data/?subfold=' + mcat.sf + '&pcode=' + mcat.code
       console.log(furl)
       const result = await axios.get(furl)
       this.viewlist = result.data
@@ -74,35 +77,30 @@ export default {
 div.category{
   background-color: #f6f6e5;
 }
-.listview{
-  display: flex;
-  width: 100%;
-  justify-content:start;
-  flex-wrap: wrap;
-}
-.imgx{
-  width:420px;
-  min-width: 360px;
-  max-width: 650;
-  flex-grow: 1;
-  padding: 5px;
-  margin: 5px;
-  background-color: #f2f2f2;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
-  }
-  .imgx p{
+.imgx p{
     width: 100%;
     height: 30px;
     font-size: 18px;
     text-align: center;
     background-color: #f2f2f2;
   }
-  .imgx p a{
+.imgx p a{
     color:#35459a;
     text-decoration: none;
     font-size: 20px;
   }
-  img{
+.boxf{
+    padding: 2px;
+    }
+.boxm{
+    padding: 8px;
+    margin: 0px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+  }
+.boxm p{
+  margin: 18px;
+}
+img{
     width: 100%;
   }
 </style>
