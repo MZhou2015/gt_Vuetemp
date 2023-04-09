@@ -20,6 +20,7 @@ import axios from 'axios'
 
 export default {
   name: 'proCategory',
+  props: ['apiUrl'],
   data () {
     return {
       msg: 'Welcome to Navigation Bar',
@@ -35,6 +36,7 @@ export default {
     this.rootcheck('check')
     this.getProdata(this.query)
     console.log(this.query)
+    console.log('apiUrl:', this.apiUrl)
   },
   computed: {
     catltem: function () {
@@ -49,9 +51,6 @@ export default {
       console.log('url3', url3)
       this.rooturl = url3.origin
       if (url3.host === 'localhost:3037') this.rooturl = 'http://localhost:5000'
-      console.log(url3.host)
-      console.log(urlstring)
-      console.log(this.rooturl)
       let pcode = url3.searchParams.get('pcode')
       let subfold = url3.searchParams.get('subfold')
       if (pcode) this.query = {sf: subfold, code: pcode}
@@ -62,7 +61,7 @@ export default {
     async getProdata (mcat) {
       // const headers = { 'Content-Type': 'application/json' }
       console.log(mcat)
-      const furl = this.rooturl + '/gsapi/data/?subfold=' + mcat.sf + '&pcode=' + mcat.code
+      const furl = this.apiUrl + '/gsapi/data/?subfold=' + mcat.sf + '&pcode=' + mcat.code
       console.log(furl)
       const result = await axios.get(furl)
       this.viewlist = result.data

@@ -43,10 +43,11 @@ import axios from 'axios'
 
 export default {
   name: 'proDtail',
+  props: ['apiUrl'],
   data () {
     return {
       query: {sf: 'catagory', code: 204},
-      proinfo: {},
+      proinfo: {description: 'abcxxdef', specification: 'abcxxdef'},
       img_url: 'https://mzhou2015.github.io/gecon_pub/src/vxdagi/image/',
       link_url: 'http://localhost:5000'
     }
@@ -81,7 +82,7 @@ export default {
     async getProinfo (mcat) {
       // const headers = { 'Content-Type': 'application/json' }
       console.log(mcat)
-      const furl = this.link_url + '/gsapi/data/?subfold=' + mcat.sf + '&pcode=' + mcat.code
+      const furl = this.apiUrl + '/gsapi/data/?subfold=' + mcat.sf + '&pcode=' + mcat.code
       console.log(furl)
       const result = await axios.get(furl)
       this.proinfo = result.data[0]

@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-      <component :is="compname" />
+      <component :is="compname" :apiUrl= apiUrl />
     </div>
 </template>
 
@@ -18,7 +18,8 @@ export default {
   },
   data () {
     return {
-      compname: 'proCatagory'
+      compname: 'proCatagory',
+      apiUrl: 'http://localhost:5000'
     }
   },
   created () {
@@ -26,6 +27,9 @@ export default {
     let subfold = urlStr.searchParams.get('subfold')
     if (subfold === 'prodetail') this.compname = 'proDetail'
     if (subfold === 'test') this.compname = 'test'
+    this.apiUrl = urlStr.origin
+    if (urlStr.host === 'localhost:3037') this.apiUrl = 'http://localhost:5000'
+    console.log(urlStr)
   }
 }
 </script>
