@@ -25,3 +25,12 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+aultCraft/
+├── frontend/              # Vue3 + Tailwind (UI & dashboards)
+│   ├── components/
+│   ├── views/
+│   └── store/
+│
+├── backend/               # Node.js (API server, routing, task queue)
+│   ├── routes/
